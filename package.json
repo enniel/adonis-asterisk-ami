@@ -1,0 +1,33 @@
+{
+  "name": "adonis-asterisk-ami",
+  "version": "0.0.1",
+  "description": "Asterisk AMI client for adonis framework",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "lint": "standard src/**/*.js providers/*.js test/*.js"
+  },
+  "author": "Evgeny Razumov (enniel)",
+  "license": "MIT",
+  "dependencies": {
+    "asterisk-ami-client": "^1.0.5",
+    "co-eachseries": "^1.0.3",
+    "lodash": "^4.17.4",
+    "node-pdu": "^1.0.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enniel/adonis-asterisk-ami.git"
+  },
+  "keywords": [
+    "asterisk",
+    "ami",
+    "adonis"
+  ],
+  "bugs": {
+    "url": "https://github.com/enniel/adonis-asterisk-ami/issues"
+  },
+  "homepage": "https://github.com/enniel/adonis-asterisk-ami#readme"
+}
