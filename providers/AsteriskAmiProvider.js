@@ -63,6 +63,17 @@ class AsteriskAmiProvider extends ServiceProvider {
       const AmiDongleSms = require('../src/Commands/AmiDongleSms')
       return new AmiDongleSms(config, app.use('Adonis/AsteriskAmi/Client'))
     })
+    this.app.bind('Adonis/Commands/Ami:Dongle:Ussd', (app) => {
+      const Config = app.use('Adonis/Src/Config')
+      const config = _.pick(Config.get('ami'), [
+        'host',
+        'port',
+        'username',
+        'secret'
+      ])
+      const AmiDongleUssd = require('../src/Commands/AmiDongleUssd')
+      return new AmiDongleUssd(config, app.use('Adonis/AsteriskAmi/Client'))
+    })
   }
 }
 
