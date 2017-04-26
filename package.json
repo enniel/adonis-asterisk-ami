@@ -7,7 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "lint": "standard src/**/*.js providers/*.js test/*.js"
+    "fix": "standard --fix",
+    "lint": "standard src/**/*.js providers/*.js bin/*.js"
   },
   "author": "Evgeny Razumov (enniel)",
   "license": "MIT",
@@ -21,7 +22,8 @@
     "adonis-ace": "^3.0.7",
     "adonis-fold": "^3.0.3",
     "adonis-framework": "^3.0.13",
-    "dotenv": "^4.0.0"
+    "dotenv": "^4.0.0",
+    "standard": "^10.0.2"
   },
   "repository": {
     "type": "git",
