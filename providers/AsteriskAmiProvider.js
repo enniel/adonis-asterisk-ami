@@ -11,7 +11,6 @@ const AmiClient = require('asterisk-ami-client')
 const _ = require('lodash')
 
 class AsteriskAmiProvider extends ServiceProvider {
-
   * register () {
     this.app.singleton('Adonis/AsteriskAmi/Client', function (app) {
       const Config = app.use('Adonis/Src/Config')

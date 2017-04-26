@@ -10,7 +10,6 @@ const _ = require('lodash')
 const Base = require('./Base')
 
 class AmiAction extends Base {
-
   /**
    * signature defines the requirements and name
    * of command.

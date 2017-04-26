@@ -12,7 +12,6 @@ const pdu = require('node-pdu')
 const each = require('co-eachseries')
 
 class AmiDongleSms extends Base {
-
   /**
    * signature defines the requirements and name
    * of command.

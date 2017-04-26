@@ -10,7 +10,6 @@ const Ioc = require('adonis-fold').Ioc
 const Command = Ioc.use('Adonis/Src/Command')
 
 class Base extends Command {
-
   constructor (config, client) {
     super()
     this.config = config
