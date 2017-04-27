@@ -68,6 +68,7 @@ class AmiDongleSms extends Base {
         props.ActionID = id
       }
       const response = yield this.client.action(props, true)
+      this.emitter.fire('ami.dongle.sms.sended', response)
       this.table(['key', 'value'], response)
     }
 
@@ -81,7 +82,7 @@ class AmiDongleSms extends Base {
     const parts = submit.getParts()
     const responses = []
     const _this = this
-    yield each(parts, function * (part) {
+    yield each(parts, function * (part, i) {
       const props = {
         Action: 'DongleSendPdu',
         Device: device,
@@ -91,6 +92,7 @@ class AmiDongleSms extends Base {
         props.ActionID = id
       }
       const response = yield _this.client.action(props, true)
+      _this.emitter.fire(`ami.dongle.sms.sended`, response)
       responses.push(response)
     })
     return responses

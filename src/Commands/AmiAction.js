@@ -62,6 +62,8 @@ class AmiAction extends Base {
 
     this.table(['key', 'value'], response)
 
+    this.emitter.fire('ami.action.sended', response)
+
     this.client.disconnect()
   }
 }

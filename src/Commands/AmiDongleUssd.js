@@ -56,6 +56,7 @@ class AmiDongleUssd extends Base {
       props.ActionID = id
     }
     const response = yield this.client.action(props, true)
+    this.emitter.fire('ami.dongle.ussd.sended', response)
     this.table(['key', 'value'], response)
 
     this.client.disconnect()

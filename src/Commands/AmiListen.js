@@ -9,11 +9,6 @@
 const Base = require('./Base')
 
 class AmiListen extends Base {
-  constructor (config, client, emitter) {
-    super(config, client)
-    this.emitter = emitter
-  }
-
   /**
    * signature defines the requirements and name
    * of command.

@@ -53,6 +53,21 @@ module.exports = () => {
         'Adonis/Commands/Ami:Dongle:Ussd'
       ])
       Ace.invoke(require(path.join(__dirname, '../../package.json')))
+      const Event = fold.Ioc.use('Adonis/Src/Event')
+      Event.when('ami.connected', function * (client) {
+        client.on('response', (response) => {
+          console.log('ami.connected fired', response)
+        })
+      })
+      Event.when('ami.action.sended', function * (response) {
+        console.log('ami.action.sended fired',response)
+      })
+      Event.when('ami.dongle.sms.sended', function * (response) {
+        console.log('ami.dongle.sms.sended fired',response)
+      })
+      Event.when('ami.dongle.ussd.sended', function * (response) {
+        console.log('ami.dongle.ussd.sended fired',response)
+      })
     })
     .catch((error) => console.error(error.stack))
 }
