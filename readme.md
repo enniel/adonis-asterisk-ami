@@ -1,5 +1,7 @@
 # Adonis Asterisk AMI
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/enniel/adonis-asterisk-ami.svg)](https://greenkeeper.io/)
+
 Easy control via [asterisk](http://www.asterisk.org/) manager interface (AMI).
 
 Installation and configuration
