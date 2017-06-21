@@ -7,8 +7,16 @@
     "test": "test"
   },
   "scripts": {
-    "fix": "standard --fix",
-    "lint": "standard src/**/*.js providers/*.js bin/*.js"
+    "lint": "standard",
+    "lint:fix": "standard --fix",
+    "precommit": "lint-staged",
+    "prepush": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run lint:fix",
+      "git add"
+    ]
   },
   "author": "Evgeny Razumov (enniel)",
   "license": "MIT",
@@ -23,6 +31,8 @@
     "adonis-fold": "^3.0.3",
     "adonis-framework": "^3.0.13",
     "dotenv": "^4.0.0",
+    "husky": "^0.13.4",
+    "lint-staged": "^4.0.0",
     "standard": "^10.0.2"
   },
   "repository": {
