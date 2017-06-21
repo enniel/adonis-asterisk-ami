@@ -7,3 +7,4 @@ yarn-error.log
 yarn.lock
 .editorconfig
 .env.example
+package-lock.json
