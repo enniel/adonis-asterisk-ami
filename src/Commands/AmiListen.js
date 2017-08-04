@@ -9,13 +9,17 @@
 const Base = require('./Base')
 
 class AmiListen extends Base {
+  static get commandName () {
+    return 'ami:listen'
+  }
+
   /**
    * signature defines the requirements and name
    * of command.
    *
    * @return {String}
    */
-  get signature () {
+  static get signature () {
     return `ami:listen {--debug?} {--host?} {--port?} {--username?} {--secret?}`
   }
 
@@ -25,7 +29,7 @@ class AmiListen extends Base {
    *
    * @return {String}
    */
-  get description () {
+  static get description () {
     return 'Listen Asterisk AMI events.'
   }
 
@@ -36,10 +40,10 @@ class AmiListen extends Base {
    * @param  {Object} args    [description]
    * @param  {Object} options [description]
    */
-  * handle (args, options) {
-    yield super.handle(args, options)
+  async handle (args, options) {
+    await super.handle(args, options)
 
-    this.client
+    this.Client
       .on('disconnect', () => {
         this.error(`AMI client is disconnected.`)
       })
@@ -50,12 +54,12 @@ class AmiListen extends Base {
         this.error(e)
       })
 
-    this.client
+    this.Client
       .on('event', event => {
         if (options.debug) {
           this.table(['key', 'value'], event)
         }
-        this.emitter.fire(`ami.events.${event.Event}`, event)
+        this.Emitter.fire(`ami.events.${event.Event}`, event)
       })
   }
 }

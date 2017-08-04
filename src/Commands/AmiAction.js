@@ -10,13 +10,17 @@ const _ = require('lodash')
 const Base = require('./Base')
 
 class AmiAction extends Base {
+  static get commandName () {
+    return 'ami:action'
+  }
+
   /**
    * signature defines the requirements and name
    * of command.
    *
    * @return {String}
    */
-  get signature () {
+  static get signature () {
     return `ami:action {action} {--props=@value} {--id=@value} {--host?} {--port?} {--username?} {--secret?}`
   }
 
@@ -26,7 +30,7 @@ class AmiAction extends Base {
    *
    * @return {String}
    */
-  get description () {
+  static get description () {
     return 'Handle Asterisk AMI actions.'
   }
 
@@ -37,8 +41,8 @@ class AmiAction extends Base {
    * @param  {Object} args    [description]
    * @param  {Object} options [description]
    */
-  * handle (args, options) {
-    yield super.handle(args, options)
+  async handle (args, options) {
+    await super.handle(args, options)
 
     let {
       props, id
@@ -58,13 +62,13 @@ class AmiAction extends Base {
       props.ActionID = id
     }
 
-    const response = yield this.client.action(props, true)
+    const response = await this.Client.action(props, true)
 
     this.table(['key', 'value'], response)
 
-    this.emitter.fire('ami.action.sended', response)
+    this.Emitter.fire('ami.action.sended', response)
 
-    this.client.disconnect()
+    this.Client.disconnect()
   }
 }
 

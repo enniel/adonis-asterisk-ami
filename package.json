@@ -1,6 +1,6 @@
 {
   "name": "adonis-asterisk-ami",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Asterisk AMI client for adonis framework",
   "main": "index.js",
   "directories": {
@@ -22,14 +22,13 @@
   "license": "MIT",
   "dependencies": {
     "asterisk-ami-client": "^1.0.5",
-    "co-eachseries": "^1.0.3",
     "lodash": "^4.17.4",
-    "node-pdu": "^1.0.6"
+    "node-pdu": "^1.0.11"
   },
   "devDependencies": {
-    "adonis-ace": "^3.0.7",
-    "adonis-fold": "^3.0.3",
-    "adonis-framework": "^3.0.13",
+    "@adonisjs/ace": "^4.0.4",
+    "@adonisjs/fold": "^4.0.2",
+    "@adonisjs/framework": "^4.0.6",
     "dotenv": "^4.0.0",
     "husky": "^0.13.4",
     "lint-staged": "^4.0.0",

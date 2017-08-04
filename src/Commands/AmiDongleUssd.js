@@ -9,13 +9,17 @@
 const Base = require('./Base')
 
 class AmiDongleUssd extends Base {
+  static get commandName () {
+    return 'ami:dongle:ussd'
+  }
+
   /**
    * signature defines the requirements and name
    * of command.
    *
    * @return {String}
    */
-  get signature () {
+  static get signature () {
     return `ami:dongle:ussd {ussd} {device?} {--id=@value} {--host?} {--port?} {--username?} {--secret?}`
   }
 
@@ -25,7 +29,7 @@ class AmiDongleUssd extends Base {
    *
    * @return {String}
    */
-  get description () {
+  static get description () {
     return 'Send USSD command using chan dongle.'
   }
 
@@ -36,8 +40,8 @@ class AmiDongleUssd extends Base {
    * @param  {Object} args    [description]
    * @param  {Object} options [description]
    */
-  * handle (args, options) {
-    yield super.handle(args, options)
+  async handle (args, options) {
+    await super.handle(args, options)
 
     let {
       ussd, device
@@ -55,11 +59,11 @@ class AmiDongleUssd extends Base {
     if (id) {
       props.ActionID = id
     }
-    const response = yield this.client.action(props, true)
-    this.emitter.fire('ami.dongle.ussd.sended', response)
+    const response = await this.Client.action(props, true)
+    this.Emitter.fire('ami.dongle.ussd.sended', response)
     this.table(['key', 'value'], response)
 
-    this.client.disconnect()
+    this.Client.disconnect()
   }
 }
 

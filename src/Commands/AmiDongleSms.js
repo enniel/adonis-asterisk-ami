@@ -9,16 +9,19 @@
 const _ = require('lodash')
 const Base = require('./Base')
 const pdu = require('node-pdu')
-const each = require('co-eachseries')
 
 class AmiDongleSms extends Base {
+  static get commandName () {
+    return 'ami:dongle:sms'
+  }
+
   /**
    * signature defines the requirements and name
    * of command.
    *
    * @return {String}
    */
-  get signature () {
+  static get signature () {
     return `ami:dongle:sms {number} {message} {device?} {--id=@value} {--pdu?} {--host?} {--port?} {--username?} {--secret?}`
   }
 
@@ -28,7 +31,7 @@ class AmiDongleSms extends Base {
    *
    * @return {String}
    */
-  get description () {
+  static get description () {
     return 'Send SMS messages using chan dongle.'
   }
 
@@ -39,8 +42,8 @@ class AmiDongleSms extends Base {
    * @param  {Object} args    [description]
    * @param  {Object} options [description]
    */
-  * handle (args, options) {
-    yield super.handle(args, options)
+  async handle (args, options) {
+    await super.handle(args, options)
 
     let {
       number, message, device
@@ -53,7 +56,7 @@ class AmiDongleSms extends Base {
     device = device || _.get(this.config, 'dongle.sms.device')
 
     if (pdu) {
-      const responses = yield this.pdu(number, message, device, id)
+      const responses = await this.pdu(number, message, device, id)
       _.each(responses, (response) => {
         this.table(['key', 'value'], response)
       })
@@ -67,22 +70,22 @@ class AmiDongleSms extends Base {
       if (id) {
         props.ActionID = id
       }
-      const response = yield this.client.action(props, true)
-      this.emitter.fire('ami.dongle.sms.sended', response)
+      const response = await this.Client.action(props, true)
+      this.Emitter.fire('ami.dongle.sms.sended', response)
       this.table(['key', 'value'], response)
     }
 
-    this.client.disconnect()
+    this.Client.disconnect()
   }
 
-  * pdu (number, message, device, id) {
+  async pdu (number, message, device, id) {
     const submit = pdu.Submit()
     submit.setAddress(number)
     submit.setData(message)
     const parts = submit.getParts()
     const responses = []
-    const _this = this
-    yield each(parts, function * (part, i) {
+    for (let key in parts) {
+      const part = parts[key]
       const props = {
         Action: 'DongleSendPdu',
         Device: device,
@@ -91,10 +94,10 @@ class AmiDongleSms extends Base {
       if (id) {
         props.ActionID = id
       }
-      const response = yield _this.client.action(props, true)
-      _this.emitter.fire(`ami.dongle.sms.sended`, response)
+      const response = await this.Client.action(props, true)
+      this.Emitter.fire(`ami.dongle.sms.sended`, response)
       responses.push(response)
-    })
+    }
     return responses
   }
 }
