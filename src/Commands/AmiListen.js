@@ -59,6 +59,7 @@ class AmiListen extends Base {
         if (options.debug) {
           this.table(['key', 'value'], event)
         }
+        this.Emitter.fire('ami.events.*', event)
         this.Emitter.fire(`ami.events.${event.Event}`, event)
       })
   }
