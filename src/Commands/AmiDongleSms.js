@@ -53,7 +53,7 @@ class AmiDongleSms extends Base {
       pdu, id
     } = options
 
-    device = device || _.get(this.config, 'dongle.sms.device')
+    device = device || this.Config.get('ami.dongle.sms.device')
 
     if (pdu) {
       const responses = await this.pdu(number, message, device, id)
