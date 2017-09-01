@@ -1,6 +1,6 @@
 {
   "name": "adonis-asterisk-ami",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "Asterisk AMI client for adonis framework",
   "main": "index.js",
   "directories": {
