@@ -49,7 +49,7 @@ class AmiAction extends Base {
     } = options
 
     if (props) {
-      props = _.split(props, ',')
+      props = _.split(props, ';')
       props = _.reduce(props, (result, value) => {
         const [ k, v ] = _.split(value, ':', 2)
         result[k] = v

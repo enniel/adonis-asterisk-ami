@@ -115,7 +115,7 @@ If would you like to see event log in the console use *debug* option
 **Send ami action**
 
 ```sh
-./ace ami:action <action> --props=<key1>:<value1>,<key2>:<value2> --id=<UNIQUE_ID?>
+./ace ami:action <action> --props='<key1>:<value1>;<key2>:<value2>' --id=<UNIQUE_ID?>
 ```
 
 ```js
@@ -124,7 +124,7 @@ const props = _.reduce({
   <key2>: <value2>
 }, (result, value, key) => {
   if (result.length) {
-    result = `${result},`
+    result = `${result};`
   }
   result += `${key}:${value}`
   return result
