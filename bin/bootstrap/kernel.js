@@ -14,7 +14,7 @@ require('dotenv').config({ path: path.join(__dirname, '../../.env') })
 
 const Config = {
   get (key) {
-    return this[key]
+    return _.get(this, key)
   },
 
   get ami () {

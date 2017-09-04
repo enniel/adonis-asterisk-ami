@@ -20,7 +20,7 @@ class AmiDongleUssd extends Base {
    * @return {String}
    */
   static get signature () {
-    return `ami:dongle:ussd {ussd} {device?} {--id=@value} {--host?} {--port?} {--username?} {--secret?}`
+    return `ami:dongle:ussd {ussd} {device?} {--id=@value} {--debug?} {--host?} {--port?} {--username?} {--secret?}`
   }
 
   /**
@@ -44,7 +44,7 @@ class AmiDongleUssd extends Base {
     await super.handle(args, options)
 
     let {
-      ussd, device
+      ussd, device, debug
     } = args
 
     const {
@@ -61,9 +61,11 @@ class AmiDongleUssd extends Base {
     }
     const response = await this.Client.action(props, true)
     this.Emitter.fire('ami.dongle.ussd.sended', response)
-    this.table(['key', 'value'], response)
-
+    if (debug) {
+      this.table(['key', 'value'], response)
+    }
     this.Client.disconnect()
+    return response
   }
 }
 

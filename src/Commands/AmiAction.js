@@ -21,7 +21,7 @@ class AmiAction extends Base {
    * @return {String}
    */
   static get signature () {
-    return `ami:action {action} {--props=@value} {--id=@value} {--host?} {--port?} {--username?} {--secret?}`
+    return `ami:action {action} {--props=@value} {--id=@value} {--debug?} {--host?} {--port?} {--username?} {--secret?}`
   }
 
   /**
@@ -45,7 +45,7 @@ class AmiAction extends Base {
     await super.handle(args, options)
 
     let {
-      props, id
+      props, id, debug
     } = options
 
     if (props) {
@@ -64,11 +64,15 @@ class AmiAction extends Base {
 
     const response = await this.Client.action(props, true)
 
-    this.table(['key', 'value'], response)
+    if (debug) {
+      this.table(['key', 'value'], response)
+    }
 
     this.Emitter.fire('ami.action.sended', response)
 
     this.Client.disconnect()
+
+    return response
   }
 }
 

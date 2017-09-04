@@ -22,7 +22,7 @@ class AmiDongleSms extends Base {
    * @return {String}
    */
   static get signature () {
-    return `ami:dongle:sms {number} {message} {device?} {--id=@value} {--pdu?} {--host?} {--port?} {--username?} {--secret?}`
+    return `ami:dongle:sms {number} {message} {device?} {--id=@value} {--pdu?} {--debug?} {--host?} {--port?} {--username?} {--secret?}`
   }
 
   /**
@@ -50,32 +50,38 @@ class AmiDongleSms extends Base {
     } = args
 
     const {
-      pdu, id
+      pdu, id, debug
     } = options
 
     device = device || this.Config.get('ami.dongle.sms.device')
 
     if (pdu) {
       const responses = await this.pdu(number, message, device, id)
-      _.each(responses, (response) => {
-        this.table(['key', 'value'], response)
-      })
-    } else {
-      const props = {
-        Action: 'DongleSendSms',
-        Device: device,
-        Number: number,
-        Message: message
+      if (debug) {
+        _.each(responses, (response) => {
+          this.table(['key', 'value'], response)
+        })
       }
-      if (id) {
-        props.ActionID = id
-      }
-      const response = await this.Client.action(props, true)
-      this.Emitter.fire('ami.dongle.sms.sended', response)
-      this.table(['key', 'value'], response)
+      this.Client.disconnect()
+      return responses
     }
 
+    const props = {
+      Action: 'DongleSendSms',
+      Device: device,
+      Number: number,
+      Message: message
+    }
+    if (id) {
+      props.ActionID = id
+    }
+    const response = await this.Client.action(props, true)
+    this.Emitter.fire('ami.dongle.sms.sended', response)
+    if (debug) {
+      this.table(['key', 'value'], response)
+    }
     this.Client.disconnect()
+    return response
   }
 
   async pdu (number, message, device, id) {
