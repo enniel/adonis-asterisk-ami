@@ -51,8 +51,12 @@ class AmiAction extends Base {
     if (props) {
       props = _.split(props, ';')
       props = _.reduce(props, (result, value) => {
-        const [ k, v ] = _.split(value, ':', 2)
-        result[k] = v
+        if (value.length) {
+          const colonIndex = value.indexOf(':')
+          const k = value.substring(0, colonIndex)
+          const v = value.substring(colonIndex + 1, value.length)
+          result[k] = v
+        }
         return result
       }, {})
     }
