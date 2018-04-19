@@ -28,18 +28,6 @@ class AsteriskAmiProvider extends ServiceProvider {
       ])
       return new AmiClient(config)
     })
-    this.app.bind('Adonis/Commands/Ami:Action', (app) => {
-      return require('../src/Commands/AmiAction')
-    })
-    this.app.bind('Adonis/Commands/Ami:Listen', (app) => {
-      return require('../src/Commands/AmiListen')
-    })
-    this.app.bind('Adonis/Commands/Ami:Dongle:Sms', (app) => {
-      return require('../src/Commands/AmiDongleSms')
-    })
-    this.app.bind('Adonis/Commands/Ami:Dongle:Ussd', (app) => {
-      return require('../src/Commands/AmiDongleUssd')
-    })
   }
 }
 

@@ -39,23 +39,27 @@ const Config = {
 
 module.exports = async () => {
   try {
+    ioc.bind('Adonis/Src/Helpers', function () {
+      return {
+        appRoot () {
+          return path.join(__dirname, '..', '..')
+        }
+      }
+    })
     resolver
       .appNamespace('App')
     registrar
       .providers([
         '@adonisjs/framework/providers/AppProvider',
-        path.join(__dirname, '../../providers/AsteriskAmiProvider')
+        path.join(__dirname, '../../providers/AsteriskAmiProvider'),
+        path.join(__dirname, '../../providers/CommandsProvider')
       ])
       .register()
-
-    await registrar.boot()
     ioc.bind('Adonis/Src/Config', function () {
       return Config
     })
-    Ace.addCommand('Adonis/Commands/Ami:Action')
-    Ace.addCommand('Adonis/Commands/Ami:Listen')
-    Ace.addCommand('Adonis/Commands/Ami:Dongle:Sms')
-    Ace.addCommand('Adonis/Commands/Ami:Dongle:Ussd')
+
+    await registrar.boot()
     Ace.wireUpWithCommander()
     Ace.invoke()
   } catch (e) {
