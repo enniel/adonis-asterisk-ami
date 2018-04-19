@@ -16,25 +16,20 @@ Using yarn:
 yarn add adonis-asterisk-ami
 ```
 
-Once it's installed, you can register the service provider in `bootsrap/app.js` in the `aceProviders`:
+Once it's installed, you can register the service providers in `bootsrap/app.js`:
 
 ```js
-const aceProviders = [
+const providers = [
   ...
   'adonis-asterisk-ami/providers/AsteriskAmiProvider',
   ...
 ]
-```
 
-And add commands in `commands`:
+...
 
-```js
-const commands = [
+const aceProviders = [
   ...
-  'Adonis/Commands/Ami:Listen',
-  'Adonis/Commands/Ami:Action',
-  'Adonis/Commands/Ami:Dongle:Sms',
-  'Adonis/Commands/Ami:Dongle:Ussd'
+  'adonis-asterisk-ami/providers/CommandsProvider',
   ...
 ]
 ```
